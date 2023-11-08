@@ -28,7 +28,7 @@ body{
 #screen{
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 88%;
     height: 30%;
     margin-top: 30px;
     gap: 0;
@@ -58,7 +58,7 @@ body{
 #buttons{
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 88%;
 }
 
 .buttonRows{
