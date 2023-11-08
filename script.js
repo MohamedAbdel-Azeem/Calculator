@@ -27,20 +27,24 @@ function drawButtons(){
     delButton.addEventListener('click',backspace);
     delButton.setAttribute('id','del');
     delButton.textContent = 'DEL';
+    delButton.classList.add('Remove');
     const clearButton = document.createElement('button');
     clearButton.addEventListener('click',clear);
     clearButton.setAttribute('id','AC');
+    clearButton.classList.add('Remove');
     clearButton.textContent = 'AC';
     row1.appendChild(clearButton);
     row1.appendChild(delButton);
 
     const addButton = document.createElement('button');
+    addButton.classList.add('Operations');
     addButton.addEventListener('click',()=>{
         addOperation('+');
     });
     addButton.setAttribute('id','add');
     addButton.textContent = '+';
     const subButton = document.createElement('button');
+    subButton.classList.add('Operations');
     subButton.addEventListener('click',()=>{
         addOperation('-');
     });
@@ -55,11 +59,13 @@ function drawButtons(){
     });
     mulButton.setAttribute('id','mul');
     mulButton.textContent = '*';
+    mulButton.classList.add('Operations');
     const divideButton = document.createElement('button');
     divideButton.addEventListener('click',()=>{
         addOperation('/');
     });
     divideButton.setAttribute('id','divide');
+    divideButton.classList.add('Operations');
     divideButton.textContent = '/';
     row2.appendChild(divideButton);
     row2.appendChild(mulButton);
@@ -87,10 +93,12 @@ function drawButtons(){
 
 
     const equalButton = document.createElement('button');
+    equalButton.classList.add('Operations');
     equalButton.addEventListener('click',evaluateExpressions);
     equalButton.setAttribute('id','equal');
     equalButton.textContent = '=';
     const ansButton = document.createElement('button');
+    ansButton.classList.add('Operations');
     ansButton.addEventListener('click',()=>{
         if (operand == null){
             operator1 = 'Ans';
@@ -239,6 +247,9 @@ function evaluateExpressions(){
         y = parseFloat(ans);
     } else {
         y = parseFloat(operator2);
+    }
+    if (operand == null){
+        ans = x;
     }
     if (operand == '+'){
         ans = x+y;

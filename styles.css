@@ -1,10 +1,15 @@
+@font-face {
+    font-family: 'Calculator-Font';
+    src: url('./fonts/Digital7Mono-Yz9J4.ttf') format('truetype');
+  }
+
 body{
-    background-color: #0077b6;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #0077b6;
+    margin-top: 3%;
 }
-
 
 
 #calculator-body{
@@ -27,47 +32,33 @@ body{
     height: 30%;
     margin-top: 30px;
     gap: 0;
+    font-family: 'Calculator-Font',sans-serif;
+    font-weight: 500;
 }
-/*
-textarea{
-    background-color: #f48c06;
-    resize: none;
-    width: 90%;
-    height: 40%;
-    margin-top: 15px;
-    border-radius: 5%;
-    outline: none;
-    font-size: 20px;
-    padding: 7px;
-}
-*/
 
 #screen1{
-    background-color: #f48c06;
+    background-color: #a4c3b2;
     max-width: 100%;
     height: 60%;
-    border-top-right-radius: 7%;
-    border-top-left-radius: 7%;
     padding-left: 10px;
     padding-top: 10px;
-    font-size: 20px;
+    font-size: 30px;
+    text-align: left;
 }
 
 #screen2{
-    background-color: #f48c06;
+    background-color: #a4c3b2;
     max-width: 100%;
     height: 30%;
-    border-bottom-left-radius: 7%;
-    border-bottom-right-radius:7%;
-    font-size: 24px;
     text-align: right;
     padding-right: 20px;
+    font-size: 35px;
 }
 
 #buttons{
     display: flex;
     flex-direction: column;
-    width: 95%;
+    width: 90%;
 }
 
 .buttonRows{
@@ -86,3 +77,40 @@ textarea{
     height: 60px;
     border-radius: 5%;
 }
+
+button{
+    background-color: #f7e1d7;
+    font-family: 'Calculator-Font',sans-serif;
+    font-size: 24px;
+}
+
+.Remove{
+    background-color: #e63946;
+}
+
+.Operations{
+    background-color: #06d6a0;
+}
+
+a {
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    text-decoration: none;
+    color: #fff;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+  
+  a span {
+    margin-right: 10px;
+  }
+  
+  a img {
+    margin-left: 7px;
+    width: 17px;
+    height: auto;
+    color: wheat;
+  }
+  
