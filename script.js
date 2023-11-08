@@ -24,27 +24,41 @@ function drawButtons(){
 
 
     const delButton = document.createElement('button');
+    delButton.addEventListener('click',backspace);
     delButton.setAttribute('id','del');
     delButton.textContent = 'DEL';
     const clearButton = document.createElement('button');
+    clearButton.addEventListener('click',clear);
     clearButton.setAttribute('id','AC');
     clearButton.textContent = 'AC';
     row1.appendChild(clearButton);
     row1.appendChild(delButton);
 
     const addButton = document.createElement('button');
+    addButton.addEventListener('click',()=>{
+        addOperation('+');
+    });
     addButton.setAttribute('id','add');
     addButton.textContent = '+';
     const subButton = document.createElement('button');
+    subButton.addEventListener('click',()=>{
+        addOperation('-');
+    });
     subButton.setAttribute('id','sub');
     subButton.textContent = '-';
     row3.appendChild(subButton);
     row3.appendChild(addButton);
 
     const mulButton = document.createElement('button');
+    mulButton.addEventListener('click',()=>{
+        addOperation('*');
+    });
     mulButton.setAttribute('id','mul');
     mulButton.textContent = '*';
     const divideButton = document.createElement('button');
+    divideButton.addEventListener('click',()=>{
+        addOperation('/');
+    });
     divideButton.setAttribute('id','divide');
     divideButton.textContent = '/';
     row2.appendChild(divideButton);
@@ -53,6 +67,9 @@ function drawButtons(){
 
     for (let i = 9; i >= 0 ; i--){
         const button = document.createElement('button');
+        button.addEventListener('click',()=>{
+            addDigit(i);
+        });
         button.setAttribute('id',i);
         button.textContent = i;
         if (i >= 7){
@@ -70,6 +87,7 @@ function drawButtons(){
 
 
     const equalButton = document.createElement('button');
+    equalButton.addEventListener('click',evaluateExpressions);
     equalButton.setAttribute('id','equal');
     equalButton.textContent = '=';
     const ansButton = document.createElement('button');
@@ -89,16 +107,23 @@ function drawButtons(){
     buttonsContainer.appendChild(row4);
 }
 
+function clear(){
+    operator1 = '';
+    operator2 = '';
+    operand = null;
+    screen1.textContent = '';
+    screen2.textContent = '';
+}
+
 
 function textAreaController(){
     document.addEventListener('keydown',()=>{
         var key = event.key;
         if (['+','-','*','/'].includes(key)){
-            pressOperation(key);
+            addOperation(key);
         }
         if (['0','1','2','3','4','5','6','7','8','9'].includes(key)){
-            screen1.textContent+= key;
-            addPress(key);
+            addDigit(key);
         }
         if (key ==='Backspace'){
             backspace();
@@ -110,12 +135,15 @@ function textAreaController(){
 }
 
 
-function addPress(digit){
+function addDigit(digit){
     if (operand == null){
         operator1+=digit;
+        screen1.textContent= operator1;
     } else {
         operator2+=digit;
+        screen1.textContent = operator1+operand+operator2;
     }
+
 }
 
 function backspace(){
@@ -131,19 +159,23 @@ function backspace(){
     }
 }
 
-function pressOperation(operation){
+function addOperation(operation){
     if (operand == null){
+        if (operator1 == ''){ // no operator1 was entered
+            if (ans != 'NaN'){
+                operator1 = ans;
+            }
+        }
         operand = operation;
-        screen1.textContent+= operand;
+        screen1.textContent= operator1+operand;
     } else {
         if (operator2 == ''){ // might want to change the operand
             operand = operation;
-            backspace();
-            screen1.textContent+= operand;
+            screen1.textContent= operator1+operand;
         } else { // user entered OP1 , operand and OP2 Evaluate then let Operand is the operation and OP2 is Empty
             if (operator1 = ''){
                 operator1 = ans;
-                evaluateExpressions();
+                screen1.textContent = operator1+operand;
             } else {
                 evaluateExpressions();
                 operator1 = ans;
@@ -180,7 +212,6 @@ function evaluateExpressions(){
     operand = null;
     screen2.textContent = ans;
 }
-
 
 textAreaController();
  
