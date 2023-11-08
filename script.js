@@ -91,9 +91,21 @@ function drawButtons(){
     equalButton.setAttribute('id','equal');
     equalButton.textContent = '=';
     const ansButton = document.createElement('button');
+    ansButton.addEventListener('click',()=>{
+        if (operand == null){
+            operator1 = 'Ans';
+            screen1.textContent = 'Ans';
+        } else {
+            operator2 = 'Ans';
+            screen1.textContent = operator1 + operand + operator2;
+        }
+    });
     ansButton.setAttribute('id','ans');
     ansButton.textContent = 'Ans';
     const decButton = document.createElement('button');
+    decButton.addEventListener('click',()=>{
+        addDigit('.');
+    });
     ansButton.setAttribute('id','dec');
     decButton.textContent = '.';
     decButton.style.fontSize = '20px';
@@ -122,7 +134,7 @@ function textAreaController(){
         if (['+','-','*','/'].includes(key)){
             addOperation(key);
         }
-        if (['0','1','2','3','4','5','6','7','8','9'].includes(key)){
+        if (['0','1','2','3','4','5','6','7','8','9','.'].includes(key)){
             addDigit(key);
         }
         if (key ==='Backspace'){
@@ -137,25 +149,55 @@ function textAreaController(){
 
 function addDigit(digit){
     if (operand == null){
-        operator1+=digit;
+        if (operator1 == 'Ans'){
+            return;
+        }
+        if (digit == '.'){
+            if (!operator1.includes('.')){
+                operator1+=digit;
+            }
+        } else {
+            operator1+=digit;
+        }
         screen1.textContent= operator1;
     } else {
-        operator2+=digit;
+        if (operator2 == 'Ans'){
+            return;
+        }
+        if (digit == '.'){
+            if (!operator2.includes('.')){
+                operator2+=digit;
+            }
+        } else {
+            operator2+=digit;
+        }
         screen1.textContent = operator1+operand+operator2;
     }
 
 }
 
 function backspace(){
-    screen1.textContent = screen1.textContent.slice(0,-1);
+    if (screen1.textContent[screen1.textContent.length-1] == 's'){
+        screen1.textContent = screen1.textContent.slice(0,-3);
+    } else {
+        screen1.textContent = screen1.textContent.slice(0,-1);
+    }
     if (operator2 = ''){
         if (operand == null){
-            operator1 = operator1.slice(0,-1);
+            if (operator1 == 'Ans'){
+                operator1 = '';
+            } else {
+                operator1 = operator1.slice(0,-1);
+            }
         } else {
             operand = null;
         }
     } else {
-        operator2 = operator2.slice(0,-1);
+        if (operator2 == 'Ans'){
+            operator2 = '';
+        } else {
+            operator2 = operator2.slice(0,-1);
+        }
     }
 }
 
@@ -186,8 +228,18 @@ function addOperation(operation){
 
 
 function evaluateExpressions(){
-    let x = parseFloat(operator1);
-    let y = parseFloat(operator2);
+    let x = 0;
+    let y = 0;
+    if (operator1 == 'Ans'){
+        x = parseFloat(ans);
+    } else {
+        x = parseFloat(operator1);
+    }
+    if (operator2 == 'Ans'){
+        y = parseFloat(ans);
+    } else {
+        y = parseFloat(operator2);
+    }
     if (operand == '+'){
         ans = x+y;
     }
