@@ -3,6 +3,12 @@
     src: url('./fonts/Digital7Mono-Yz9J4.ttf') format('truetype');
   }
 
+@media (max-width : 768px){
+    #calculator-body{
+        width: 320px;
+    }
+}
+
 body{
     display: flex;
     justify-content: center;
