@@ -164,6 +164,8 @@ function addOperation(operation){
         if (operator1 == ''){ // no operator1 was entered
             if (ans != 'NaN'){
                 operator1 = ans;
+            } else {
+                operator1 = 0;
             }
         }
         operand = operation;
@@ -173,16 +175,11 @@ function addOperation(operation){
             operand = operation;
             screen1.textContent= operator1+operand;
         } else { // user entered OP1 , operand and OP2 Evaluate then let Operand is the operation and OP2 is Empty
-            if (operator1 = ''){
-                operator1 = ans;
-                screen1.textContent = operator1+operand;
-            } else {
                 evaluateExpressions();
                 operator1 = ans;
                 operator2 = '';
                 operand = operation;
                 screen1.textContent = operator1+operand;
-            }
         }
     }
 }
