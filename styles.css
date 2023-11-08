@@ -3,11 +3,6 @@
     src: url('./fonts/Digital7Mono-Yz9J4.ttf') format('truetype');
   }
 
-@media (max-width : 768px){
-    #calculator-body{
-        width: 320px;
-    }
-}
 
 body{
     display: flex;
@@ -29,7 +24,6 @@ body{
     flex-direction: column;
     gap: 10px;
 }
-
 
 #screen{
     display: flex;
@@ -99,9 +93,6 @@ button{
 }
 
 a {
-    position: absolute;
-    bottom: 10%;
-    right: 10%;
     text-decoration: none;
     color: #fff;
     font-size: 14px;
