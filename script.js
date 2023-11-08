@@ -1,3 +1,11 @@
+const screen1 = document.querySelector('#screen1'); // for input
+const screen2 = document.querySelector('#screen2'); // for output
+
+let operator1 = '';
+let operator2 = '';
+let operand = null;
+let ans = 0;
+
 
 function drawButtons(){
     const buttonsContainer = document.querySelector('#buttons');
@@ -81,20 +89,100 @@ function drawButtons(){
     buttonsContainer.appendChild(row4);
 }
 
+
 function textAreaController(){
-    const textArea = document.querySelector('#screen');
-    textArea.addEventListener('keypress', (event) => {
-        const regex = /^[0-9+\-*/]+$/;
-        const key = event.key;
-        if (!regex.test(key)) {
-          event.preventDefault();
+    document.addEventListener('keydown',()=>{
+        var key = event.key;
+        if (['+','-','*','/'].includes(key)){
+            pressOperation(key);
+        }
+        if (['0','1','2','3','4','5','6','7','8','9'].includes(key)){
+            screen1.textContent+= key;
+            addPress(key);
+        }
+        if (key ==='Backspace'){
+            backspace();
         }
         if (key === 'Enter'){
-            console.log('Evaluate!'); // replace with an Evaluating Function
+            evaluateExpressions();
         }
-      });
-
+    });
 }
 
+
+function addPress(digit){
+    if (operand == null){
+        operator1+=digit;
+    } else {
+        operator2+=digit;
+    }
+}
+
+function backspace(){
+    screen1.textContent = screen1.textContent.slice(0,-1);
+    if (operator2 = ''){
+        if (operand == null){
+            operator1 = operator1.slice(0,-1);
+        } else {
+            operand = null;
+        }
+    } else {
+        operator2 = operator2.slice(0,-1);
+    }
+}
+
+function pressOperation(operation){
+    if (operand == null){
+        operand = operation;
+        screen1.textContent+= operand;
+    } else {
+        if (operator2 == ''){ // might want to change the operand
+            operand = operation;
+            backspace();
+            screen1.textContent+= operand;
+        } else { // user entered OP1 , operand and OP2 Evaluate then let Operand is the operation and OP2 is Empty
+            if (operator1 = ''){
+                operator1 = ans;
+                evaluateExpressions();
+            } else {
+                evaluateExpressions();
+                operator1 = ans;
+                operator2 = '';
+                operand = operation;
+                screen1.textContent = operator1+operand;
+            }
+        }
+    }
+}
+
+
+function evaluateExpressions(){
+    let x = parseFloat(operator1);
+    let y = parseFloat(operator2);
+    if (operand == '+'){
+        ans = x+y;
+    }
+    if (operand == '-'){
+        ans = x-y;
+    }
+    if (operand == '*'){
+        ans = x*y;
+    }
+    if (operand == '/'){
+        if (y == 0){
+            ans = 'NaN';
+        } else {
+            ans = x/y;
+        }
+    }
+    operator1 = '';
+    operator2 = '';
+    operand = null;
+    screen2.textContent = ans;
+}
+
+
 textAreaController();
+ 
+
 drawButtons();
